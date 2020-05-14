@@ -1,7 +1,6 @@
 from phue import Bridge
 import sys
-import time
-import random
+import random, time
 
 colours = {}
 colours['red'] = (65535, 254)
@@ -42,33 +41,32 @@ def disco():
 				lights[light].saturation = colours[key][1]
 				lights[light].brightness = random.randint(0, 254)
 
-def error_check():
-	if len(sys.argv) > 1:
-		if len(sys.argv) == 2:
-			if sys.argv[1] == 'disco':
-				disco()
-			elif sys.argv[1] not in colours:
-				return False
-			else:
-				colour = sys.argv[1]
-		elif len(sys.argv) == 3:
-			if sys.argv[1] not in colours or not sys.argv[2].isnumeric() or int(sys.argv[2]) > 100 or int(sys.argv[2]) < 0:
-				return False
-			else:
-				colour = sys.argv[1]
-				brightness = brightness * int(sys.argv[2])/100
-		elif len(sys.argv) > 3:
-			return False
-	return True
-
 if __name__ == '__main__':
 	err = "usage: python3 hueproject.py red|white|orange|yellow|green|aqua|blue|dark blue|purple|pink 0-100"
 	colour = 'white'
 	brightness = 254
+	if len(sys.argv) > 1:
+		if len(sys.argv) == 2:
+			if sys.argv[1] == 'disco':
+				disco()
+			if sys.argv[1] not in colours:
+				print(err)
+				sys.exit()
+			else:
+				colour = sys.argv[1]
+		elif len(sys.argv) == 3:
+			if sys.argv[1] not in colours or not sys.argv[2].isnumeric() or int(sys.argv[2]) > 100 or int(sys.argv[2]) < 0:
+				print(err)
+				sys.exit()
+			else:
+				colour = sys.argv[1]
+				brightness = brightness * int(sys.argv[2])/100
+		elif len(sys.argv) > 3:
+			print(err)
+			sys.exit()
+	print(int(brightness))
 
-	if not error_check():
-		print(err)
-		sys.exit()
-
-
-	living_room_lights(colour, int(brightness))
+	if len(sys.argv) == 2 and sys.argv[1] == 'disco':
+		disco()
+	else:
+		living_room_lights(colour, int(brightness))
