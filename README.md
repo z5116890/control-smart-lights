@@ -1,5 +1,7 @@
 # Can turn on lights, change colour or turn living room into a Disco
-usage: python3 hueproject.py red|white|orange|yellow|green|aqua|blue|dark blue|purple|pink 0-100
+usage: python3 hueproject.py colour brightness
+
+e.g. python3 hueproject.py red|white|orange|yellow|green|aqua|blue|dark blue|purple|pink 91
 
 disco: python3 hueproject.py disco
 1. Pip install phue
